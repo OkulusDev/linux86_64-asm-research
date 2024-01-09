@@ -6,17 +6,16 @@
 ;; все равно можно использовать 32 или 16 битные регистры для обозначения
 ;; младших 32 или 16 битов. Это сделано для обратной совместимости и для
 ;; удобства переноса 32 битного кода на 64 битный код
-format ELF64
+format ELF64    ; Указываем формат и режим программы (ELF 64bit)
 
-section '.data' writeable
+section ".data" writeable   ; Секция инициализации данных и консант
+    message db "Hello, World!"
+    message_length = $ - message
 
-message db 'Hello, World!'
-message_length = $ - message
+section ".text" executable  ; Секция кода
+    public _start
 
-section '.text' executable
-
-public _start
-
+; Стартовая метка
 _start:
     ;; Вызываем системный вызов write для вывода строки на экран.
     ;; В Linux системный вызов write имеет номер 1.
